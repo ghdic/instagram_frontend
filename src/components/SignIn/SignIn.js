@@ -10,8 +10,6 @@ function SignIn() {
     })
 
     let login = () => {
-        // localStorage.setItem("users", "admin");
-        // window.location.reload();
 
         auth.signInWithEmailAndPassword(user.emailId, user.password)
             .then((userCredential) => {

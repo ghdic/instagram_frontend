@@ -9,7 +9,7 @@ function Mainpage() {
     let [postData, setPostData] = useState([]);
 
     useEffect(() => {
-        fetch("http://localhost:8080/post")
+        fetch("https://instagram-spring.herokuapp.com/post")
             .then(response => response.json())
             .then(data => {
                 setPostData(data);
@@ -102,7 +102,7 @@ function Mainpage() {
                         headers: {'Content-type': "application/json"},
                         body: JSON.stringify(payload)
                     }
-                    fetch("http://localhost:8080/post", requestOptions)
+                    fetch("https://instagram-spring.herokuapp.com/post", requestOptions)
                         .then(response => response.json())
                         .then(data => {
                             setPostData([data, ...postData])

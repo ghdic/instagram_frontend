@@ -29,7 +29,7 @@ function SignUp() {
                     headers: {'Content-Type': "application/json"},
                     body: JSON.stringify(payload)
                 }
-                fetch("http://localhost:8080/user", requestOptions)
+                fetch("https://instagram-spring.herokuapp.com/user", requestOptions)
                     .then(response => response.json())
                     .then(data => {
                         localStorage.setItem("user", JSON.stringify(firebase_user));

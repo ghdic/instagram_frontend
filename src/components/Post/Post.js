@@ -10,7 +10,7 @@ function Post({post}) {
     const [commentList, setCommentList] = useState([]);
 
     useEffect(() => {
-        fetch(`http://localhost:8080/comments/${post.postId}`)
+        fetch(`https://instagram-spring.herokuapp.com/comments/${post.postId}`)
             .then(response => response.json())
             .then(data => {
                 setCommentList(data);
@@ -34,7 +34,7 @@ function Post({post}) {
                     headers: {'Content-type': "application/json"},
                     body: JSON.stringify(payload)
                 }
-                fetch("http://localhost:8080/comments", requestOptions)
+                fetch("https://instagram-spring.herokuapp.com/comments", requestOptions)
                     .then(response => response.json())
                     .then(data => {
                         console.log(data)
