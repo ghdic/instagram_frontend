@@ -1,17 +1,42 @@
 import React from 'react';
-import './Navbar.css'
 import {Grid, Avatar} from "@material-ui/core";
-import insta_logo from '../../images/logoinsta.png'
-import home from '../../images/home.svg'
-import message from '../../images/message.svg'
-import find from '../../images/find.svg'
-import react from '../../images/love.svg'
-import pp from '../../images/pp1.png'
+import insta_logo from '../images/logoinsta.png'
+import home from '../images/home.svg'
+import message from '../images/message.svg'
+import find from '../images/find.svg'
+import react from '../images/love.svg'
+import pp from '../images/pp1.png'
+import styled from "styled-components";
 
+const NavbarStyled = styled.div`
+  .navbar_barContent {
+    height: 54px;
+    background-color: white;
+    border-bottom: 1px solid #dbdbdb;
+  }
+
+  .navbar_logo {
+    margin-top: 10px;
+  }
+
+  .navbar_img {
+    margin:15px 10px;
+  }
+
+  .nav_searBar {
+    height: 30px;
+    width: 215px;
+    margin-top: 10px;
+    border: 1px solid #dbdbdb;
+    text-align: center;
+    background-color: #fafafa;
+    border-radius: 5px;
+  }
+`
 
 function Navbar() {
   return (
-    <div>
+    <NavbarStyled>
         <div className={"navbar_barContent"}>
             <Grid container>
                 <Grid item xs={2}></Grid>
@@ -32,8 +57,8 @@ function Navbar() {
             </Grid>
         </div>
 
-    </div>
+    </NavbarStyled>
   );
-};
+}
 
 export default Navbar;

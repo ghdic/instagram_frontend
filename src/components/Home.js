@@ -1,7 +1,6 @@
 import React from 'react';
-import './Home.css'
-import Navbar from "../Navbar/Navbar";
-import MainContent from "../MainContent/MainContent";
+import Navbar from "./Navbar";
+import MainContent from "./MainContent";
 
 function Home() {
   return (
@@ -10,6 +9,6 @@ function Home() {
         <MainContent/>
     </div>
   );
-};
+}
 
 export default Home;

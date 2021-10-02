@@ -1,14 +1,20 @@
 import React from 'react';
-import './MainContent.css'
 import {Grid} from "@material-ui/core";
-import StatusBar from "../StatusBar/StatusBar";
-import Mainpage from "../MainPage/Mainpage";
-import InfoSection from "../InfoSection/InfoSection";
-import Suggestions from "../Suggestions/Suggestions";
+import StatusBar from "./StatusBar";
+import Mainpage from "./Mainpage";
+import InfoSection from "./InfoSection";
+import Suggestions from "./Suggestions";
+import styled from "styled-components";
+
+const MainContentStlyed = styled.div`
+  body {
+    background-color: #fafafa;
+  }
+`
 
 function MainContent() {
   return (
-    <div>
+    <MainContentStlyed>
         <Grid container>
             <Grid item xs={2}></Grid>
             <Grid item xs={6} style={{minWidth:"650px"}}>
@@ -21,8 +27,8 @@ function MainContent() {
             </Grid>
             <Grid item xs={2}></Grid>
         </Grid>
-    </div>
+    </MainContentStlyed>
   );
-};
+}
 
 export default MainContent;

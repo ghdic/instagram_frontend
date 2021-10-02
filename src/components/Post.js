@@ -1,9 +1,65 @@
 import React, {useEffect, useState} from 'react';
-import './Post.css'
 import {Avatar} from "@material-ui/core";
-import love from '../../images/love.svg'
-import comment from '../../images/comment.svg'
-import share from '../../images/share.svg'
+import love from '../images/love.svg'
+import comment from '../images/comment.svg'
+import share from '../images/share.svg'
+import styled from "styled-components";
+import default_profile from '../images/default_userprofile.jpg'
+
+const PostStyled = styled.div`
+
+  border: 1px solid #dbdbdb;
+  width: 650px;
+  margin: 60px 15px;
+  
+  .post_container {
+    width: 650px;
+    border: 1px solid #dbdbdb;
+    background-color: white;
+    margin-top: 25px;
+  }
+
+  .post_header {
+    height: 60px;
+    border-bottom: 1px solid #dbdbdb;
+    display: flex;
+  }
+
+  .post_image {
+    min-width: 30px;
+    min-height: 30px;
+    margin: 10px;
+  }
+  
+  .post_content {
+    margin: 10px 10px 10px 20px;
+    font-size: 20px;
+    font-weight: 500;
+  }
+
+  .post_username {
+    font-weight: bold;
+    margin-top: 20px;
+  }
+
+  .post_reactimage {
+    width: 25px;
+    height: 25px;
+    margin: 5px;
+  }
+
+  .post_comment {
+    margin: 10px;
+  }
+
+  .post_commentbox {
+    height: 56px;
+    width: 98%;
+    border: 1px solid #dbdbdb;
+    font-size: 18px;
+    padding-left: 10px;
+  }
+`
 
 function Post({post}) {
 
@@ -14,6 +70,7 @@ function Post({post}) {
             .then(response => response.json())
             .then(data => {
                 setCommentList(data);
+              console.log(commentList);
             })
     }, [post.postId])
 
@@ -22,10 +79,8 @@ function Post({post}) {
             let comment = event.currentTarget.value;
             if(comment !== null && comment !== undefined) {
                 let payload = {
-                    "commentId": Math.floor(Math.random()*100000).toString(),
-                    "userId": JSON.parse(localStorage.getItem("user")).uid,
                     "postId": post.postId,
-                    "timeStamp": new Date().getTime(),
+                    "uid": JSON.parse(localStorage.getItem("user")).uid,
                     "comment": comment
                 }
 
@@ -49,13 +104,14 @@ function Post({post}) {
     }
 
   return (
-    <div className="post_container">
+    <PostStyled className="post_container">
         <div className="post_header">
-            <Avatar className="post_image" src="" />
-            <div className="post_username">{post.userName}</div>
+            <Avatar className="post_image" src={post.user.profileImage === "" ? default_profile:post.user.profileImage } />
+            <div className="post_username">{post.user.nickName}</div>
         </div>
         <div>
             <img src={post.postPath} width="650px" alt=""/>
+          <div className="post_content">{post.content}</div>
         </div>
         <div>
             <div style={{"marginLeft":"10px"}}>
@@ -70,14 +126,14 @@ function Post({post}) {
         <div>
             {
                 commentList.map((item, index) => (
-                    <div className="post_comment" key={item.id}>{item.userName}: {item.comment}</div>
+                    <div className="post_comment" key={item.commentId}>{item.user.nickName}: {item.comment}</div>
                 ))
             }
             <input className="post_commentbox" onKeyPress={submitComments} type="text" placeholder="Add a commnet..." />
         </div>
-    </div>
+    </PostStyled>
 
   );
-};
+}
 
 export default Post;
