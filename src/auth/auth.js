@@ -73,3 +73,8 @@ export function signUp(emailId, password, userName, nickName, setUser) {
             alert(errorCode, errorMessage);
         });
 }
+
+export function Logout(setUser) {
+  localStorage.removeItem("user");
+  setUser(null);
+}

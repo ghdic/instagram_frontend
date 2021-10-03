@@ -8,6 +8,7 @@ import PostModal from "./PostModal";
 const MainpageStyled = styled.div`
   .mainpage_uploadicon {
     margin: 20px 20px;
+    cursor: pointer;
   }
 
   .fileupload > input {
@@ -23,18 +24,7 @@ const MainpageStyled = styled.div`
   }
 `
 
-function Mainpage() {
-
-    let [postData, setPostData] = useState([]);
-    console.log(postData)
-
-    useEffect(() => {
-        fetch("https://instagram-spring.herokuapp.com/post")
-            .then(response => response.json())
-            .then(data => {
-                setPostData(data);
-            })
-    }, [])
+function Mainpage({postData, setPostData}) {
 
     const [open, setOpen] = useState(false);
     const handleOpen = () => {
@@ -45,8 +35,20 @@ function Mainpage() {
     }
 
     const handlePostData = (data) => {
-      setPostData([data, postData]);
+      setPostData([data, ...postData]);
   }
+
+    const updatePostData = (data) => {
+      let items = [...postData];
+      items[items.findIndex(el => el.postId === data.postId)] = data;
+      setPostData(items);
+    }
+
+    const deletePostData = (data) => {
+      let items = [...postData];
+      items.splice(items.findIndex(el => el.postId === data.postId), 1);
+      setPostData(items);
+    }
 
 
   return (
@@ -58,7 +60,7 @@ function Mainpage() {
         </div>
         {
             postData.map((item, index) => (
-                <Post post={item} key={item.postId} />
+                <Post post={item} key={item.postId} updatePostData={updatePostData} deletePostData={deletePostData} />
             ))
         }
     </MainpageStyled>

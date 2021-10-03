@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from "react";
 import {Grid, Avatar} from "@material-ui/core";
 import insta_logo from '../images/logoinsta.png'
 import home from '../images/home.svg'
@@ -7,6 +7,9 @@ import find from '../images/find.svg'
 import react from '../images/love.svg'
 import pp from '../images/pp1.png'
 import styled from "styled-components";
+import LogoutIcon from '@mui/icons-material/Logout';
+import { AppContext } from "../App";
+import { Logout } from "../auth/auth";
 
 const NavbarStyled = styled.div`
   .navbar_barContent {
@@ -35,6 +38,8 @@ const NavbarStyled = styled.div`
 `
 
 function Navbar() {
+  const {setUser} = useContext(AppContext);
+
   return (
     <NavbarStyled>
         <div className={"navbar_barContent"}>
@@ -51,7 +56,7 @@ function Navbar() {
                     <img className={"navbar_img"} src={message} width={"25px"} alt=""/>
                     <img className={"navbar_img"} src={find} width={"25px"} alt=""/>
                     <img className={"navbar_img"} src={react} width={"25px"} alt=""/>
-                    <Avatar className={"navbar_img"} src={pp} style={{"maxWidth":"25px", "maxHeight":"25px"}} />
+                    <LogoutIcon className={"navbar_img"} style={{cursor: "pointer"}} onClick={() => Logout(setUser)} />
                 </Grid>
                 <Grid item xs={1}></Grid>
             </Grid>

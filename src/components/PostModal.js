@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
@@ -8,6 +8,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import uploadImage from "../images/upload.png";
 import { storage } from "../firebase";
+import { AppContext } from "../App";
 
 function PostModal({open, handleClose, handlePostData, post = null}) {
   let [formData, setFormData] = useState({
@@ -15,6 +16,7 @@ function PostModal({open, handleClose, handlePostData, post = null}) {
     content: ""
   })
   let [progress, setProgress] = useState("");
+  const {user} = useContext(AppContext);
 
   useEffect(() => {
     if(post === null)
@@ -53,7 +55,7 @@ function PostModal({open, handleClose, handlePostData, post = null}) {
 
 
     let payload = {
-      "uid": JSON.parse(localStorage.getItem("user")).uid,
+      "uid": user.uid,
       "postPath": formData.postPath,
       "content": formData.content
     }
@@ -64,9 +66,11 @@ function PostModal({open, handleClose, handlePostData, post = null}) {
       headers: {'Content-type': "application/json"},
       body: JSON.stringify(payload)
     }
-    fetch("https://instagram-spring.herokuapp.com/post", requestOptions)
+    let requestUrl = post === null ? "https://instagram-spring.herokuapp.com/post":`https://instagram-spring.herokuapp.com/post/${post.postId}`
+    fetch(requestUrl, requestOptions)
       .then(response => response.json())
       .then(data => {
+        console.log(data);
         handlePostData(data);
         handleClose();
       })
@@ -85,7 +89,7 @@ function PostModal({open, handleClose, handlePostData, post = null}) {
           </DialogContentText>
           <div className="fileupload" style={{textAlign:"center"}}>
             <label htmlFor="file-upload">
-              <img src={formData.postPath === "" ? uploadImage: formData.postPath} style={{width:"500px"}} alt=""/>
+              <img src={formData.postPath === "" ? uploadImage: formData.postPath} style={{width:"500px", cursor:"pointer"}} alt=""/>
             </label>
             <input id="file-upload" onChange={upload_image} type="file" style={{display:"none"}} />
           </div>

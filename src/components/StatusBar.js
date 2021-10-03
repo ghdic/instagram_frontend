@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {Avatar} from "@material-ui/core";
 import defaultProfile from '../images/default_userprofile.jpg'
 import styled from "styled-components";
+import all_image from '../images/all.jpg'
 
 const StatusBarStyled = styled.div`
   .statusbar_container {
@@ -23,6 +24,7 @@ const StatusBarStyled = styled.div`
     min-width: 55px;
     min-height: 55px;
     border: 1px solid #D2D2D2;
+    cursor: pointer;
   }
 
   .status {
@@ -42,7 +44,7 @@ const StatusBarStyled = styled.div`
   }
 `
 
-function StatusBar() {
+function StatusBar({setPostData}) {
     let [statusList, setStatusList] = useState([])
 
     useEffect(() => {
@@ -53,13 +55,34 @@ function StatusBar() {
             })
     }, [])
 
+  const selectAllPost = () => {
+    fetch(`https://instagram-spring.herokuapp.com/post`)
+      .then(response => response.json())
+      .then(data => {
+        setPostData(data);
+      })
+  }
+
+    const selectUserPost = (uid) => {
+      fetch(`https://instagram-spring.herokuapp.com/post/${uid}`)
+        .then(response => response.json())
+        .then(data => {
+          setPostData(data);
+        })
+    }
+
   return (
     <StatusBarStyled>
         <div className="statusbar_container">
+          <div className="status">
+            <Avatar className="statusbar_status" onClick={selectAllPost} src={all_image} />
+            <div className="statusbar_text">
+            </div>
+          </div>
             {
                 statusList.map((item, index)=> (
                     <div className="status" key={index}>
-                        <Avatar className="statusbar_status" src={item.profileImage === "" ? defaultProfile:item.profileImage} />
+                        <Avatar className="statusbar_status" onClick={() => selectUserPost(item.uid)} src={item.profileImage === "" ? defaultProfile:item.profileImage} />
                         <div className="statusbar_text">
                             {item.nickName}
                         </div>

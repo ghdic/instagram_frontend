@@ -52,7 +52,11 @@ const LoginPageStyled = styled.div`
     margin-top: 5px;
     border: 1px solid #0395F6;
     background-color: #0395F6;
-    color: #FFFFFF
+    color: #FFFFFF;
+    
+    &:focus {
+      border: 3px solid #5872FF;
+    }
   }
 
   .login_ordiv {
@@ -110,10 +114,6 @@ const LoginPageStyled = styled.div`
     width: 350px;
     text-align: center;
     margin-top: 20px;
-  }
-
-  .loginPage_option {
-
   }
 
   .loginPage_dwimg {
